@@ -8,5 +8,4 @@ public class PessoaDTO
     public string Senha { get; set; }
     public string Cpf { get; set; }
     public string Telefone { get; set; }
-
 }
