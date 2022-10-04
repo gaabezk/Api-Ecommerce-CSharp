@@ -1,44 +1,35 @@
 ﻿using com.myapi.Domain.Validations;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace com.myapi.Domain.Entities
+namespace com.myapi.Domain.Entities;
+
+public sealed class Compra
 {
-    public sealed class Compra
+    public Compra(int produtoId, int pessoaId)
     {
-        public int Id { get; private set; }
-        public int ProdutoId { get; private set; }
-        public int PessoaId { get; private set; }
-        public DateTime Date { get; private set; } = DateTime.Now;
-        public Pessoa Pessoa { get; set; }
-        public Produto Produto { get; set; }
+        Validation(produtoId, pessoaId);
+    }
 
-        public Compra(int produtoId, int pessoaId, DateTime date)
-        {
-            Validation(produtoId, pessoaId);
+    public Compra(int id, int produtoId, int pessoaId)
+    {
+        DomainValidationException.When(id < 0, "Id da compra deve ser informado");
+        Id = id;
+        Validation(produtoId, pessoaId);
+    }
 
-        }
-        public Compra(int id, int produtoId, int pessoaId, DateTime date)
-        {
-            DomainValidationException.When(id < 0, "Id da compra deve ser informado")
-            Id = id;
-            Validation(produtoId, pessoaId);
+    public int Id { get; }
+    public int ProdutoId { get; private set; }
+    public int PessoaId { get; private set; }
+    public DateTime Date { get; private set; }
+    public Pessoa Pessoa { get; set; }
+    public Produto Produto { get; set; }
 
-        }
+    private void Validation(int produtoId, int pessoaId)
+    {
+        DomainValidationException.When(produtoId < 0, "Id do produto deve ser informado");
+        DomainValidationException.When(pessoaId < 0, "Id do usuario deve ser informado");
 
-        private void Validation(int produtoId, int pessoaId)
-        {
-            DomainValidationException.When(produtoId < 0, "Id do produto deve ser informado");
-            DomainValidationException.When(pessoaId < 0, "Id do usuario deve ser informado");
-
-            ProdutoId = produtoId;
-            PessoaId = pessoaId;
-
-        }
-
+        ProdutoId = produtoId;
+        PessoaId = pessoaId;
+        Date = DateTime.Now;
     }
 }
