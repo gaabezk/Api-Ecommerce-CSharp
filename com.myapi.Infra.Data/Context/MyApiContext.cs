@@ -8,6 +8,9 @@ namespace com.myapi.Infra.Data.Context
         public MyApiContext(DbContextOptions<MyApiContext> options) : base(options) { }
 
         public DbSet<Pessoa> Pessoa { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<Compra> Compras { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
