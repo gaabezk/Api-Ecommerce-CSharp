@@ -24,7 +24,7 @@ namespace com.myapi.Domain.Entities
         }
         public Compra(int id, int produtoId, int pessoaId, DateTime date)
         {
-            DomainValidationException.When(id<0,"Id da compra deve ser informado")
+            DomainValidationException.When(id < 0, "Id da compra deve ser informado")
             Id = id;
             Validation(produtoId, pessoaId);
 
@@ -37,7 +37,7 @@ namespace com.myapi.Domain.Entities
 
             ProdutoId = produtoId;
             PessoaId = pessoaId;
-            
+
         }
 
     }

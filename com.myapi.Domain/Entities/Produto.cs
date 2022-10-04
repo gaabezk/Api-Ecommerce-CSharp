@@ -14,7 +14,7 @@ namespace com.myapi.Domain.Entities
         public string CodigoErp { get; private set; }
         public int QuantidadeEstoque { get; private set; }
         public double Preco { get; private set; }
-        public ICollection<Compra> compras { get; set; }
+        public ICollection<Compra> Compras { get; set; }
 
         public Produto(string nome, string codigoErp, int quantidadeEstoque, double preco)
         {

@@ -17,7 +17,7 @@ namespace com.myapi.Domain.Entities
         public string Cpf { get; private set; }
         public string Telefone { get; private set; }
         public string Role { get; private set; } = Enum.Role.ROLE_USER.ToString();
-        public ICollection<Compra> compras { get; set; }
+        public ICollection<Compra> Compras { get; set; }
 
 
         public Pessoa(string nome, string email, string senha, string cpf, string telefone)
