@@ -34,4 +34,39 @@ public class PessoaController : ControllerBase
 
         return BadRequest(result);
     }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult> GetById(int id)
+    {
+        var result = await _pessoaService.GetById(id);
+        if (result.IsSuccess)
+            return Ok(result);
+        
+        return BadRequest(result);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateAsync([FromBody] PessoaDTO pessoaDto)
+    {
+        var result = await _pessoaService.UpdateAsync(pessoaDto);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+    
+    
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<ActionResult> RemoveAsync(int id)
+    {
+        var result = await _pessoaService.RemoveAsync(id);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+    
+    
 }

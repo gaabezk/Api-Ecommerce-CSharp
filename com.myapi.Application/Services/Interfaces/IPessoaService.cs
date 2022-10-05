@@ -6,4 +6,7 @@ public interface IPessoaService
 {
     Task<ResultService<PessoaDTO>> CreateAsync(PessoaDTO pessoaDto);
     Task<ResultService<ICollection<PessoaDTO>>> GetAllAsync();
+    Task<ResultService<PessoaDTO>> GetById(int id);
+    Task<ResultService> UpdateAsync(PessoaDTO pessoaDto);
+    Task<ResultService> RemoveAsync(int id);
 }
