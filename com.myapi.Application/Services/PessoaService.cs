@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections;
+using AutoMapper;
 using com.myapi.Application.DTO;
 using com.myapi.Application.DTO.Validations;
 using com.myapi.Application.Services.Interfaces;
@@ -30,5 +31,12 @@ public class PessoaService : IPessoaService
         var pessoa = _mapper.Map<Pessoa>(pessoaDto);
         var data = await _pessoaRepository.CreateAsync(pessoa);
         return ResultService.Ok(_mapper.Map<PessoaDTO>(data));
+    }
+
+    public async Task<ResultService<ICollection<PessoaDTO>>> GetAllAsync()
+    {   
+        var result = await _pessoaRepository.GetAllAsync();
+        return ResultService.Ok(_mapper.Map<ICollection<PessoaDTO>>(result));
+
     }
 }
