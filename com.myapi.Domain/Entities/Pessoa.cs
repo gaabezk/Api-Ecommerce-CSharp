@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using com.myapi.Domain.Validations;
+﻿using com.myapi.Domain.Validations;
 
 namespace com.myapi.Domain.Entities;
 

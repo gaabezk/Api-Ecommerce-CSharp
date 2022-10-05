@@ -32,22 +32,22 @@ public class ResultService
 
     public static ResultService Fail(string message)
     {
-        return new() { IsSuccess = false, Message = message };
+        return new ResultService { IsSuccess = false, Message = message };
     }
 
     public static ResultService<T> Fail<T>(string message)
     {
-        return new() { IsSuccess = false, Message = message };
+        return new ResultService<T> { IsSuccess = false, Message = message };
     }
 
     public static ResultService Ok(string message)
     {
-        return new() { IsSuccess = true, Message = message };
+        return new ResultService { IsSuccess = true, Message = message };
     }
 
     public static ResultService<T> Ok<T>(T data)
     {
-        return new() { IsSuccess = true, Data = data };
+        return new ResultService<T> { IsSuccess = true, Data = data };
     }
 }
 

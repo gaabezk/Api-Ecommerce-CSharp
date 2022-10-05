@@ -14,12 +14,13 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<MyApiContext>(options => 
+        services.AddDbContext<MyApiContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IPessoaRepository, PessoaRepository>();
         return services;
     }
+
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddAutoMapper(typeof(DomainToDtoMapping));

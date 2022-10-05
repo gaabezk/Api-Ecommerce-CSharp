@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using AutoMapper;
+﻿using AutoMapper;
 using com.myapi.Application.DTO;
 using com.myapi.Application.DTO.Validations;
 using com.myapi.Application.Services.Interfaces;
@@ -54,17 +53,16 @@ public class PessoaService : IPessoaService
 
         var validation = new PessoaDTOValidator().Validate(pessoaDto);
         if (!validation.IsValid)
-            return ResultService.RequestError("Problema com a validação dos campos",validation);
+            return ResultService.RequestError("Problema com a validação dos campos", validation);
 
         var pessoa = await _pessoaRepository.GetByIdAsync(pessoaDto.Id);
-        if(pessoa==null)
+        if (pessoa == null)
             return ResultService.Fail("Usuario não encontrado");
 
-        
-        pessoa = _mapper.Map<PessoaDTO, Pessoa>(pessoaDto, pessoa); // edicao
+
+        pessoa = _mapper.Map(pessoaDto, pessoa); // edicao
         await _pessoaRepository.EditAsync(pessoa);
         return ResultService.Ok("Usuario editado;");
-
     }
 
     public async Task<ResultService> RemoveAsync(int id)

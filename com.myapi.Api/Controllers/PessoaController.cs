@@ -42,7 +42,7 @@ public class PessoaController : ControllerBase
         var result = await _pessoaService.GetById(id);
         if (result.IsSuccess)
             return Ok(result);
-        
+
         return BadRequest(result);
     }
 
@@ -55,8 +55,8 @@ public class PessoaController : ControllerBase
 
         return BadRequest(result);
     }
-    
-    
+
+
     [HttpDelete]
     [Route("{id}")]
     public async Task<ActionResult> RemoveAsync(int id)
@@ -67,6 +67,4 @@ public class PessoaController : ControllerBase
 
         return BadRequest(result);
     }
-    
-    
 }
