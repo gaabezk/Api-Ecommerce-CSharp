@@ -8,7 +8,7 @@ public class PessoaMap : IEntityTypeConfiguration<Pessoa>
 {
     public void Configure(EntityTypeBuilder<Pessoa> builder)
     {
-        builder.ToTable("Pessoa");
+        builder.ToTable("pessoa");
 
         builder.HasKey(c => c.Id);
 

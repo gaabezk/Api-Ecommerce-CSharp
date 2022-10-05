@@ -1,4 +1,5 @@
-﻿using com.myapi.Domain.Validations;
+﻿using System.Security.Claims;
+using com.myapi.Domain.Validations;
 
 namespace com.myapi.Domain.Entities;
 
@@ -22,7 +23,7 @@ public sealed class Pessoa
     public string Senha { get; private set; }
     public string Cpf { get; private set; }
     public string Telefone { get; private set; }
-    public string Role { get; } = Enum.Role.ROLE_USER.ToString();
+    public string Role { get; private set; }
     public ICollection<Compra> Compras { get; set; }
 
     private void Validation(string nome, string email, string senha, string cpf, string telefone)
@@ -38,5 +39,7 @@ public sealed class Pessoa
         Senha = senha;
         Cpf = cpf;
         Telefone = telefone;
+        Role = Enum.Role.ROLE_USER.ToString();
+        Compras = new List<Compra>();
     }
 }

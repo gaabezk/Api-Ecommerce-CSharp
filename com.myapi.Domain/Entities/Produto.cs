@@ -34,5 +34,6 @@ public sealed class Produto
         CodigoErp = codigoErp;
         QuantidadeEstoque = quantidadeEstoque;
         Preco = preco;
+        Compras = new List<Compra>();
     }
 }
