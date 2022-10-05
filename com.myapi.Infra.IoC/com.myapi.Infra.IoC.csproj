@@ -7,9 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\com.myapi.Application\com.myapi.Application.csproj"/>
-        <ProjectReference Include="..\com.myapi.Domain\com.myapi.Domain.csproj"/>
-        <ProjectReference Include="..\com.myapi.Infra.Data\com.myapi.Infra.Data.csproj"/>
+        <ProjectReference Include="..\com.myapi.Application\com.myapi.Application.csproj" />
+        <ProjectReference Include="..\com.myapi.Domain\com.myapi.Domain.csproj" />
+        <ProjectReference Include="..\com.myapi.Infra.Data\com.myapi.Infra.Data.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     </ItemGroup>
 
 </Project>
