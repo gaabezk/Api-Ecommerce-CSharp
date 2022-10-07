@@ -27,7 +27,7 @@ public class PessoaService : IPessoaService
         if (!result.IsValid)
             return ResultService.RequestError<PessoaDTO>("Problemas de validade!", result);
 
-        var pessoa = _mapper.Map<Pessoa>(pessoaDto);
+        var pessoa = _mapper.Map<Pessoa>(pessoaDto); // criação
         var data = await _pessoaRepository.CreateAsync(pessoa);
         return ResultService.Ok(_mapper.Map<PessoaDTO>(data));
     }
