@@ -9,4 +9,5 @@ public interface IProdutoRepository
     Task<Produto> CreateAsync(Produto produto);
     Task EditAsync(Produto produto);
     Task DeleteAsync(Produto produto);
+    Task<int> GetIdByCodigoErpAsync(string codigoErp);
 }

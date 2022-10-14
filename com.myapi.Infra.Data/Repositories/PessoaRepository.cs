@@ -27,6 +27,12 @@ public class PessoaRepository : IPessoaRepository
         await _db.SaveChangesAsync();
     }
 
+    public async Task<int> GetIdByCpfAsync(string cpf)
+    {
+        return (await _db.Pessoa.FirstOrDefaultAsync(x => x.Cpf == cpf))?.Id ??
+               0; // se tiver informacao retorno Id se nao retorna 0
+    }
+
     public async Task EditAsync(Pessoa pessoa)
     {
         _db.Update(pessoa);

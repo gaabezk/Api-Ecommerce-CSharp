@@ -9,4 +9,5 @@ public interface IPessoaRepository
     Task<Pessoa> CreateAsync(Pessoa pessoa);
     Task EditAsync(Pessoa pessoa);
     Task DeleteAsync(Pessoa pessoa);
+    Task<int> GetIdByCpfAsync(string cpf);
 }
