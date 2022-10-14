@@ -18,6 +18,7 @@ public static class DependencyInjection
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
         services.AddScoped<IPessoaRepository, PessoaRepository>();
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
         return services;
     }
 
@@ -25,6 +26,7 @@ public static class DependencyInjection
     {
         services.AddAutoMapper(typeof(DomainToDtoMapping));
         services.AddScoped<IPessoaService, PessoaService>();
+        services.AddScoped<IProdutoService, ProdutoService>();
         return services;
     }
 }
