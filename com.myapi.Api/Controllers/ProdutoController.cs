@@ -24,4 +24,46 @@ public class ProdutoController : ControllerBase
 
         return BadRequest(result);
     }
+
+    [HttpGet]
+    public async Task<ActionResult> GetAllAsync()
+    {
+        var result = await _produtoService.GetAllAsync();
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult> GetById(int id)
+    {
+        var result = await _produtoService.GetById(id);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> UpdateAsync([FromBody] ProdutoDTO produtoDto)
+    {
+        var result = await _produtoService.UpdateAsync(produtoDto);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    public async Task<ActionResult> RemoveAsync(int id)
+    {
+        var result = await _produtoService.RemoveAsync(id);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
 }
