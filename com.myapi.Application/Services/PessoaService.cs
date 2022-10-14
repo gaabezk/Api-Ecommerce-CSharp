@@ -62,7 +62,7 @@ public class PessoaService : IPessoaService
 
         pessoa = _mapper.Map(pessoaDto, pessoa); // edicao
         await _pessoaRepository.EditAsync(pessoa);
-        return ResultService.Ok("Usuario editado;");
+        return ResultService.Ok("Usuario editado");
     }
 
     public async Task<ResultService> RemoveAsync(int id)
@@ -72,6 +72,6 @@ public class PessoaService : IPessoaService
             return ResultService.Fail<PessoaDTO>("Usuario nao encontrado");
 
         await _pessoaRepository.DeleteAsync(pessoa);
-        return ResultService.Ok($"Usuaro do id: {id}, foi deletado");
+        return ResultService.Ok($"Usuaro do id {id} foi deletado");
     }
 }
