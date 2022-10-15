@@ -2,7 +2,7 @@
 
 namespace com.myapi.Application.DTO.Validations;
 
-public class ComprasDTOValidator : AbstractValidator<ComprasDTO>
+public class ComprasDTOValidator : AbstractValidator<CompraDTO>
 {
     public ComprasDTOValidator()
     {

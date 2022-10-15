@@ -10,5 +10,6 @@ public class DtoToDomainMapping : Profile
     {
         CreateMap<PessoaDTO, Pessoa>();
         CreateMap<ProdutoDTO, Produto>();
+        CreateMap<CompraDTO, Compra>();
     }
 }

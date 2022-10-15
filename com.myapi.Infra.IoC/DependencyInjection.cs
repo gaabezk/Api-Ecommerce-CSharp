@@ -19,6 +19,7 @@ public static class DependencyInjection
 
         services.AddScoped<IPessoaRepository, PessoaRepository>();
         services.AddScoped<IProdutoRepository, ProdutoRepository>();
+        services.AddScoped<ICompraRepository, CompraRepository>();
         return services;
     }
 
@@ -27,6 +28,7 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(DomainToDtoMapping));
         services.AddScoped<IPessoaService, PessoaService>();
         services.AddScoped<IProdutoService, ProdutoService>();
+        services.AddScoped<ICompraService, CompraService>();
         return services;
     }
 }

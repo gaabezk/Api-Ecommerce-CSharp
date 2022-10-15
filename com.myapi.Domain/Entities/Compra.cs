@@ -11,7 +11,7 @@ public sealed class Compra
 
     public Compra(int id, int produtoId, int pessoaId)
     {
-        DomainValidationException.When(id < 0, "Id da compra deve ser informado");
+        DomainValidationException.When(id <= 0, "Id da compra deve ser informado");
         Id = id;
         Validation(produtoId, pessoaId);
     }
@@ -25,8 +25,8 @@ public sealed class Compra
 
     private void Validation(int produtoId, int pessoaId)
     {
-        DomainValidationException.When(produtoId < 0, "Id do produto deve ser informado");
-        DomainValidationException.When(pessoaId < 0, "Id do usuario deve ser informado");
+        DomainValidationException.When(produtoId <= 0, "Id do produto deve ser informado");
+        DomainValidationException.When(pessoaId <= 0, "Id do usuario deve ser informado");
 
         ProdutoId = produtoId;
         PessoaId = pessoaId;

@@ -1,6 +1,6 @@
 ﻿namespace com.myapi.Application.DTO;
 
-public class ComprasDTO
+public class CompraDTO
 {
     public string CodigoErp { get; set; }
     public string Cpf { get; set; }
