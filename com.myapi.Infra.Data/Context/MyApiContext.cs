@@ -10,8 +10,8 @@ public class MyApiContext : DbContext
     }
 
     public DbSet<Pessoa> Pessoa { get; set; }
-    public DbSet<Produto> Produtos { get; set; }
-    public DbSet<Compra> Compras { get; set; }
+    public DbSet<Produto> Produto { get; set; }
+    public DbSet<Compra> Compra { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

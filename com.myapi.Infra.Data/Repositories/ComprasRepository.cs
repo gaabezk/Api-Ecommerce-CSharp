@@ -34,7 +34,7 @@ public class CompraRepository : ICompraRepository
 
     public async Task<Compra> GetByIdAsync(int id)
     {
-        var compra = await _db.Compras
+        var compra = await _db.Compra
             .Include(x => x.Produto)
             .Include(x => x.Pessoa)
             .FirstOrDefaultAsync(x => x.Id == id);
@@ -44,7 +44,7 @@ public class CompraRepository : ICompraRepository
 
     public async Task<ICollection<Compra>> GetByPessoaIdAsync(int pessoaId)
     {
-        return await _db.Compras
+        return await _db.Compra
             .Include(x => x.Produto)
             .Include(x => x.Pessoa)
             .Where(x => x.PessoaId == pessoaId).ToListAsync();
@@ -52,7 +52,7 @@ public class CompraRepository : ICompraRepository
 
     public async Task<ICollection<Compra>> GetByProdutoIdAsync(int produtoId)
     {
-        return await _db.Compras
+        return await _db.Compra
             .Include(x => x.Produto)
             .Include(x => x.Pessoa)
             .Where(x => x.ProdutoId == produtoId).ToListAsync();
@@ -60,7 +60,7 @@ public class CompraRepository : ICompraRepository
 
     public async Task<ICollection<Compra>> GetAllAsync()
     {
-        return await _db.Compras
+        return await _db.Compra
             .Include(x => x.Produto)
             .Include(x => x.Pessoa)
             .ToListAsync();

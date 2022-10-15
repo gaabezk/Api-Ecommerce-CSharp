@@ -29,7 +29,7 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<int> GetIdByCodigoErpAsync(string codigoErp)
     {
-        return (await _db.Produtos.FirstOrDefaultAsync(x => x.CodigoErp == codigoErp))?.Id ?? 0;  // se tiver informacao retorno Id se nao retorna 0
+        return (await _db.Produto.FirstOrDefaultAsync(x => x.CodigoErp == codigoErp))?.Id ?? 0;  // se tiver informacao retorno Id se nao retorna 0
     }
 
     public async Task EditAsync(Produto produto)
@@ -40,11 +40,11 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<ICollection<Produto>> GetAllAsync()
     {
-        return await _db.Produtos.ToListAsync();
+        return await _db.Produto.ToListAsync();
     }
 
     public async Task<Produto> GetByIdAsync(int id)
     {
-        return await _db.Produtos.FirstOrDefaultAsync(x => x.Id == id);
+        return await _db.Produto.FirstOrDefaultAsync(x => x.Id == id);
     }
 }
