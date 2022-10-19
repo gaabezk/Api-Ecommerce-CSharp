@@ -22,6 +22,7 @@ public class CompraMap : IEntityTypeConfiguration<Compra>
             .HasColumnName("id_pessoa");
 
         builder.Property(x => x.Date)
+            .HasColumnType("date")
             .HasColumnName("data_compra");
 
         builder.HasOne(x => x.Pessoa)
