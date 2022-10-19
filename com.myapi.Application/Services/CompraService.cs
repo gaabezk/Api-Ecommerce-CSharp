@@ -1,4 +1,5 @@
-﻿using com.myapi.Application.DTO;
+﻿using AutoMapper;
+using com.myapi.Application.DTO;
 using com.myapi.Application.DTO.Validations;
 using com.myapi.Application.Services.Interfaces;
 using com.myapi.Domain.Entities;
@@ -12,12 +13,15 @@ public class CompraService : ICompraService
     private readonly IProdutoRepository _produtoRepository;
     private readonly IPessoaRepository _pessoaRepository;
     private readonly ICompraRepository _compraRepository;
+    private readonly IMapper _mapper;
+    
 
-    public CompraService(IProdutoRepository produtoRepository, IPessoaRepository pessoaRepository, ICompraRepository compraRepository)
+    public CompraService(IProdutoRepository produtoRepository, IPessoaRepository pessoaRepository, ICompraRepository compraRepository, IMapper mapper)
     {
         _produtoRepository = produtoRepository;
         _pessoaRepository = pessoaRepository;
         _compraRepository = compraRepository;
+        _mapper = mapper;
     }
 
     public async Task<ResultService<CompraDTO>> CreateAsync(CompraDTO compraDto)
@@ -40,23 +44,46 @@ public class CompraService : ICompraService
 
     }
 
-    public Task<ResultService<ICollection<CompraDTO>>> GetAllAsync()
+    public async Task<ResultService<ICollection<CompraDetalheDTO>>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        var compras = await _compraRepository.GetAllAsync();
+        return ResultService.Ok(_mapper.Map<ICollection<CompraDetalheDTO>>(compras));
     }
 
-    public Task<ResultService<CompraDTO>> GetById(int id)
+    public async Task<ResultService<CompraDetalheDTO>> GetById(int id)
     {
-        throw new NotImplementedException();
+        var compra = await _compraRepository.GetByIdAsync(id);
+        if (compra == null)
+            return ResultService.Fail<CompraDetalheDTO>("Compra não encontrada!");
+        return ResultService.Ok(_mapper.Map<CompraDetalheDTO>(compra));
     }
 
-    public Task<ResultService> UpdateAsync(CompraDTO comprasDto)
+    public async Task<ResultService<CompraDTO>> UpdateAsync(CompraDTO comprasDto)
     {
-        throw new NotImplementedException();
+        if(comprasDto==null)
+            return ResultService.Fail<CompraDTO>("Obejeto deve ser informado");
+
+        var validation = new ComprasDTOValidator().Validate(comprasDto);
+        if (!validation.IsValid)
+            return ResultService.RequestError<CompraDTO>("Problema com validação dos campos", validation);
+
+        var compras = await _compraRepository.GetByIdAsync(comprasDto.Id);
+        if (compras == null)
+            return ResultService.Fail<CompraDTO>("Compra não encontrada!");
+
+        var produtoId = await _produtoRepository.GetIdByCodigoErpAsync(comprasDto.CodigoErp);
+        var pessoaId = await _pessoaRepository.GetIdByCpfAsync(comprasDto.Cpf);
+        compras.Edit(compras.Id,produtoId,pessoaId);
+        await _compraRepository.EditAsync(compras);
+        return ResultService.Ok(comprasDto);
     }
 
-    public Task<ResultService> RemoveAsync(int id)
+    public async Task<ResultService> RemoveAsync(int id)
     {
-        throw new NotImplementedException();
+        var compra = await _compraRepository.GetByIdAsync(id);
+        if (compra == null)
+            return ResultService.Fail("Compra não encontrada");
+        await _compraRepository.DeleteAsync(compra);
+        return ResultService.Ok($"Compra do id {compra.Id} deletada com sucesso!");
     }
 }

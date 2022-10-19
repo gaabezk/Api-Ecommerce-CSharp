@@ -15,8 +15,15 @@ public sealed class Compra
         Id = id;
         Validation(produtoId, pessoaId);
     }
+    
+    public void Edit(int id, int produtoId, int pessoaId)
+    {
+        DomainValidationException.When(id <= 0, "Id da compra deve ser informado");
+        Id = id;
+        Validation(produtoId, pessoaId);
+    }
 
-    public int Id { get; }
+    public int Id { get; private set; }
     public int ProdutoId { get; private set; }
     public int PessoaId { get; private set; }
     public DateTime Date { get; private set; }
