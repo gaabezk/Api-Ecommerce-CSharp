@@ -15,7 +15,7 @@ public class DomainToDtoMapping : Profile
             .ForMember(x => x.Produto, opt => opt.Ignore())
             .ConstructUsing((model, context) =>
             {
-                var dto = new CompraDetalheDTO()
+                var dto = new CompraDetalheDTO
                 {
                     Produto = model.Produto.Nome,
                     Id = model.Id,

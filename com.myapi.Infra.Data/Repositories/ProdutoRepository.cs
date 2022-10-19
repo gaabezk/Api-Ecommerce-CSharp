@@ -29,7 +29,8 @@ public class ProdutoRepository : IProdutoRepository
 
     public async Task<int> GetIdByCodigoErpAsync(string codigoErp)
     {
-        return (await _db.Produto.FirstOrDefaultAsync(x => x.CodigoErp == codigoErp))?.Id ?? 0;  // se tiver informacao retorno Id se nao retorna 0
+        return (await _db.Produto.FirstOrDefaultAsync(x => x.CodigoErp == codigoErp))?.Id ??
+               0; // se tiver informacao retorno Id se nao retorna 0
     }
 
     public async Task EditAsync(Produto produto)

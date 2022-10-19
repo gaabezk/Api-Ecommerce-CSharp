@@ -10,7 +10,7 @@ public class ComprasDTOValidator : AbstractValidator<CompraDTO>
             .NotEmpty()
             .NotNull()
             .WithMessage("Codigo Erp deve ser informado!");
-        
+
         RuleFor(x => x.Cpf)
             .NotEmpty()
             .NotNull()

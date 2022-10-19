@@ -23,7 +23,5 @@ public class ProdutoDTOValidator : AbstractValidator<ProdutoDTO>
         RuleFor(x => x.Preco)
             .GreaterThan(0.0)
             .WithMessage("Preço deve ser informado!");
-
     }
-
 }

@@ -10,13 +10,14 @@ namespace com.myapi.Application.Services;
 
 public class CompraService : ICompraService
 {
-    private readonly IProdutoRepository _produtoRepository;
-    private readonly IPessoaRepository _pessoaRepository;
     private readonly ICompraRepository _compraRepository;
     private readonly IMapper _mapper;
-    
+    private readonly IPessoaRepository _pessoaRepository;
+    private readonly IProdutoRepository _produtoRepository;
 
-    public CompraService(IProdutoRepository produtoRepository, IPessoaRepository pessoaRepository, ICompraRepository compraRepository, IMapper mapper)
+
+    public CompraService(IProdutoRepository produtoRepository, IPessoaRepository pessoaRepository,
+        ICompraRepository compraRepository, IMapper mapper)
     {
         _produtoRepository = produtoRepository;
         _pessoaRepository = pessoaRepository;
@@ -30,8 +31,8 @@ public class CompraService : ICompraService
             return ResultService.Fail<CompraDTO>("Objeto deve ser informado!");
 
         var validate = new ComprasDTOValidator().Validate(compraDto);
-        if(!validate.IsValid)
-            return ResultService.RequestError<CompraDTO>("Problemas de validação",validate);
+        if (!validate.IsValid)
+            return ResultService.RequestError<CompraDTO>("Problemas de validação", validate);
 
         var produtoId = await _produtoRepository.GetIdByCodigoErpAsync(compraDto.CodigoErp);
         var pessoaId = await _pessoaRepository.GetIdByCpfAsync(compraDto.Cpf);
@@ -39,9 +40,7 @@ public class CompraService : ICompraService
 
         var data = await _compraRepository.CreateAsync(compra);
         compraDto.Id = data.Id;
-        return ResultService.Ok<CompraDTO>(compraDto);
-
-
+        return ResultService.Ok(compraDto);
     }
 
     public async Task<ResultService<ICollection<CompraDetalheDTO>>> GetAllAsync()
@@ -60,7 +59,7 @@ public class CompraService : ICompraService
 
     public async Task<ResultService<CompraDTO>> UpdateAsync(CompraDTO comprasDto)
     {
-        if(comprasDto==null)
+        if (comprasDto == null)
             return ResultService.Fail<CompraDTO>("Obejeto deve ser informado");
 
         var validation = new ComprasDTOValidator().Validate(comprasDto);
@@ -73,7 +72,7 @@ public class CompraService : ICompraService
 
         var produtoId = await _produtoRepository.GetIdByCodigoErpAsync(comprasDto.CodigoErp);
         var pessoaId = await _pessoaRepository.GetIdByCpfAsync(comprasDto.Cpf);
-        compras.Edit(compras.Id,produtoId,pessoaId);
+        compras.Edit(compras.Id, produtoId, pessoaId);
         await _compraRepository.EditAsync(compras);
         return ResultService.Ok(comprasDto);
     }

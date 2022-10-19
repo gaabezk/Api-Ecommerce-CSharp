@@ -43,7 +43,7 @@ public class CompraController : ControllerBase
             return Ok(result);
         return BadRequest(result);
     }
-    
+
     [HttpGet]
     [Route("{id}")]
     public async Task<ActionResult> GetByIdAsync(int id)
@@ -53,7 +53,7 @@ public class CompraController : ControllerBase
             return Ok(result);
         return BadRequest(result);
     }
-    
+
     [HttpPut]
     public async Task<ActionResult> EditAsync([FromBody] CompraDTO compraDto)
     {
@@ -71,7 +71,7 @@ public class CompraController : ControllerBase
             return BadRequest(result);
         }
     }
-    
+
     [HttpDelete]
     [Route("{id}")]
     public async Task<ActionResult> RemoveAsync(int id)

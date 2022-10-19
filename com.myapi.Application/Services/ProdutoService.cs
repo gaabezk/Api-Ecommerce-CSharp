@@ -9,8 +9,8 @@ namespace com.myapi.Application.Services;
 
 public class ProdutoService : IProdutoService
 {
-    private readonly IProdutoRepository _produtoRepository;
     private readonly IMapper _mapper;
+    private readonly IProdutoRepository _produtoRepository;
 
     public ProdutoService(IProdutoRepository produtoRepository, IMapper mapper)
     {
@@ -53,17 +53,15 @@ public class ProdutoService : IProdutoService
 
         var validation = new ProdutoDTOValidator().Validate(produtoDto);
         if (!validation.IsValid)
-            return ResultService.RequestError("Problema com a validação dos campos",validation);
+            return ResultService.RequestError("Problema com a validação dos campos", validation);
 
         var produto = await _produtoRepository.GetByIdAsync(produtoDto.Id);
-        if(produto == null)
+        if (produto == null)
             return ResultService.Fail("Produto não encontrado");
 
         produto = _mapper.Map(produtoDto, produto); // edição
         await _produtoRepository.EditAsync(produto);
         return ResultService.Ok("Produto editado");
-
-
     }
 
     public async Task<ResultService> RemoveAsync(int id)
