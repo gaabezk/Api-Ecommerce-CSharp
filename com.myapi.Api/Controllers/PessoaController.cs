@@ -1,5 +1,6 @@
 ﻿using com.myapi.Application.DTO;
 using com.myapi.Application.Services.Interfaces;
+using com.myapi.Domain.FiltersDb;
 using Microsoft.AspNetCore.Mvc;
 
 namespace com.myapi.Api.Controllers;
@@ -62,6 +63,17 @@ public class PessoaController : ControllerBase
     public async Task<ActionResult> RemoveAsync(int id)
     {
         var result = await _pessoaService.RemoveAsync(id);
+        if (result.IsSuccess)
+            return Ok(result);
+
+        return BadRequest(result);
+    }
+    
+    [HttpGet]
+    [Route("paged")]
+    public async Task<ActionResult> GetPagedAsync([FromQuery] PessoaFilterDb pessoaFilterDb)
+    {
+        var result = await _pessoaService.GetPagedAsync(pessoaFilterDb);
         if (result.IsSuccess)
             return Ok(result);
 

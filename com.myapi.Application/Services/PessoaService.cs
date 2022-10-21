@@ -3,6 +3,7 @@ using com.myapi.Application.DTO;
 using com.myapi.Application.DTO.Validations;
 using com.myapi.Application.Services.Interfaces;
 using com.myapi.Domain.Entities;
+using com.myapi.Domain.FiltersDb;
 using com.myapi.Domain.Repositories;
 
 namespace com.myapi.Application.Services;
@@ -74,4 +75,14 @@ public class PessoaService : IPessoaService
         await _pessoaRepository.DeleteAsync(pessoa);
         return ResultService.Ok($"Usuaro do id {id} foi deletado");
     }
+
+    public async Task<ResultService<PagedBaseResponseDTO<PessoaDTO>>> GetPagedAsync(PessoaFilterDb pessoaFilterDb)
+    {
+        var pessoaPaged = await _pessoaRepository.GetPageAsync(pessoaFilterDb);
+        var result = new PagedBaseResponseDTO<PessoaDTO>(pessoaPaged.TotalRegisters,
+            _mapper.Map<List<PessoaDTO>>(pessoaPaged.Data));
+        
+        return ResultService.Ok(result);
+    }
+    
 }

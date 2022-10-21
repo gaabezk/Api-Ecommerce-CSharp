@@ -4,5 +4,5 @@ namespace com.myapi.Domain.FiltersDb;
 
 public class PessoaFilterDb : PageBaseRequest
 {
-    public string Nome { get; set; }
+    public string? Nome { get; set; }
 }

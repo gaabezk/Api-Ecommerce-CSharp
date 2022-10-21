@@ -16,7 +16,7 @@ public static class PagedBaseResponseHelper
             response.Data = await query.ToListAsync();
         else
             response.Data = query.OrderByDynamic(request.OrderByProperty)
-                            .Skip((request.PageSize - 1) * request.PageSize)
+                            .Skip((request.Page - 1) * request.PageSize)
                             .Take(request.PageSize)
                             .ToList();
 

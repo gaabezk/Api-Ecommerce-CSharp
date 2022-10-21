@@ -1,4 +1,5 @@
 ﻿using com.myapi.Domain.Entities;
+using com.myapi.Domain.FiltersDb;
 using com.myapi.Domain.Repositories;
 using com.myapi.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,15 @@ public class PessoaRepository : IPessoaRepository
     {
         return (await _db.Pessoa.FirstOrDefaultAsync(x => x.Cpf == cpf))?.Id ??
                0; // se tiver informacao retorno Id se nao retorna 0
+    }
+
+    public async Task<PagedBaseResponse<Pessoa>> GetPageAsync(PessoaFilterDb request)
+    {
+        var people = _db.Pessoa.AsQueryable();
+        if (!string.IsNullOrEmpty(request.Nome))
+            people = people.Where(x => x.Nome.Contains(request.Nome));
+        
+        return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseResponse<Pessoa>,Pessoa>(people, request);
     }
 
     public async Task EditAsync(Pessoa pessoa)
