@@ -14,15 +14,17 @@ public class CompraService : ICompraService
     private readonly IMapper _mapper;
     private readonly IPessoaRepository _pessoaRepository;
     private readonly IProdutoRepository _produtoRepository;
+    private readonly IUnityOfWork _unityOfWork;
 
 
     public CompraService(IProdutoRepository produtoRepository, IPessoaRepository pessoaRepository,
-        ICompraRepository compraRepository, IMapper mapper)
+        ICompraRepository compraRepository, IMapper mapper,IUnityOfWork unityOfWork)
     {
         _produtoRepository = produtoRepository;
         _pessoaRepository = pessoaRepository;
         _compraRepository = compraRepository;
         _mapper = mapper;
+        _unityOfWork = unityOfWork;
     }
 
     public async Task<ResultService<CompraDTO>> CreateAsync(CompraDTO compraDto)
@@ -34,13 +36,31 @@ public class CompraService : ICompraService
         if (!validate.IsValid)
             return ResultService.RequestError<CompraDTO>("Problemas de validação", validate);
 
-        var produtoId = await _produtoRepository.GetIdByCodigoErpAsync(compraDto.CodigoErp);
-        var pessoaId = await _pessoaRepository.GetIdByCpfAsync(compraDto.Cpf);
-        var compra = new Compra(produtoId, pessoaId);
+        try
+        {
+            await _unityOfWork.BeginTransaction();
+            var produtoId = await _produtoRepository.GetIdByCodigoErpAsync(compraDto.CodigoErp);
+            if (produtoId == 0)
+            {
+                var produto = new Produto(compraDto.Nome, compraDto.CodigoErp, compraDto.QuantidadeEstoque ?? 0, compraDto.Preco ?? 0);
+                await _produtoRepository.CreateAsync(produto);
+                produtoId = produto.Id;
+            }
+            var pessoaId = await _pessoaRepository.GetIdByCpfAsync(compraDto.Cpf);
+            var compra = new Compra(produtoId, pessoaId);
 
-        var data = await _compraRepository.CreateAsync(compra);
-        compraDto.Id = data.Id;
-        return ResultService.Ok(compraDto);
+            var data = await _compraRepository.CreateAsync(compra);
+            compraDto.Id = data.Id;
+            await _unityOfWork.Commit();
+            return ResultService.Ok(compraDto);
+        }
+        catch(Exception e)
+        {
+            await _unityOfWork.Rollback();
+            return ResultService.Fail<CompraDTO>($"{e.Message}");
+        }
+        
+        
     }
 
     public async Task<ResultService<ICollection<CompraDetalheDTO>>> GetAllAsync()
